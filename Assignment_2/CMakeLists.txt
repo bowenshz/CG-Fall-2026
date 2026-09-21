@@ -22,6 +22,15 @@ else()
     target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/../ext/eigen")
 endif()
 
+# stb and gif-h are header-only libraries with no CMake support, expose them as interface targets
+add_library(stb INTERFACE)
+target_include_directories(stb SYSTEM INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/../ext/stb")
+
+add_library(gif-h INTERFACE)
+target_include_directories(gif-h SYSTEM INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/../ext/gif-h")
+
+target_link_libraries(${PROJECT_NAME} PUBLIC stb gif-h)
+
 # Use C++11 version of the standard
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 11 CXX_STANDARD_REQUIRED ON)
 
